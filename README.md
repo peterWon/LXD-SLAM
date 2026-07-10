@@ -65,17 +65,9 @@ sudo make install
 
 It may take you some time.
 
-Install mesh_tools,
+**Install mesh_tools**
 
-```
-cd your_ws/src
-git clone https://github.com/naturerobots/mesh_tools.git
-cd ..
-rosdep update
-rosdep install --from-paths src --ignore-src -r -y
-catkin_make
-source devel/setup.bash
-```
+For convenience, we maintain a copy of mesh_tools under 'src' folder right now.
 
 ## 2. Build LXD-SLAM
 
