@@ -1,0 +1,33 @@
+<launch>
+    <arg name="bag_filename" default=""/>
+    <arg name="log_dir" default=""/>
+    <arg name="platform" default="handheld"/>
+    
+    <!-- more options are set in config/FPv2_handheld.yaml -->
+    <rosparam file="$(find lvimesher)/config/fusionportablev2/base.yaml" command="load" />
+    <rosparam file="$(find lvimesher)/config/fusionportablev2/$(arg platform).yaml" command="load" />
+
+    <group ns="lvimesher">
+        <!-- basic file parameters -->
+        <param name="bag_filename" value="$(arg bag_filename)" />
+        <param name="enable_sc_icp" value="false" />
+        <param name="enable_log_pcd" value="true" />
+        <param name="enable_log_mesh" value="false" />
+
+        <param name="log_dir" value="$(arg log_dir)" />
+        <param name="log_odom_mesh_dir" value="$(arg log_dir)/odom_mesh/" />
+        <param name="log_slam_mesh_dir" value="$(arg log_dir)/slam_mesh/" />
+        <param name="log_pcd_dir" value="$(arg log_dir)/pcd/" />
+
+        <!-- camera models -->
+        <param name="left_camera_model_path" value="$(find lvimesher)/config/cameras/FPv2/left_$(arg platform).yaml" />
+        <param name="right_camera_model_path" value="$(find lvimesher)/config/cameras/FPv2/right_$(arg platform).yaml" />
+
+        <param name="voc_file_path" value="$(find lvimesher)/config/brief_k10L6.bin" />
+        <param name="mask_filename" value="$(find lvimesher)/config/fusionportablev2/mask.png" />
+        <param name="brief_pattern_file_path" value="$(find lvimesher)/config/brief_pattern.yml" />
+    </group>
+
+    <node pkg="lvimesher" type="offline_node" name="offline_node" output="screen" required="true" />
+</launch>
+

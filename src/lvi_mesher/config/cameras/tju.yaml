@@ -1,0 +1,18 @@
+%YAML:1.0
+mask: ""
+model_type:   PINHOLE
+camera_name:  NONAME
+image_width:  720
+image_height: 540
+distortion_model: radial-tangential
+distortion_parameters:
+   k1: -0.098533
+   k2: 0.095607
+   p1: 0.000068
+   p2: 0.000063
+   k3: 0
+projection_parameters:
+   fx: 602.264320
+   fy: 602.219184
+   cx: 371.379817
+   cy: 288.612322

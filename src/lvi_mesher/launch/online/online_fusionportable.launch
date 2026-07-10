@@ -1,0 +1,37 @@
+<launch>
+    <arg name="bag_filename" default="/media/wz/2C96A0A60155E8F8/Dataset/FusionPortableV2/rosbag/ugv/ugv_parking01.bag"/>
+    <arg name="log_dir" default="/media/wz/2C96A0A60155E8F8/Dataset/FusionPortableV2/LOG/LXD-SLAM-degenerate/"/>
+    <arg name="platform" default="ugv"/>
+    
+    <rosparam file="$(find lvimesher)/config/fusionportablev2/base.yaml" command="load" />
+    <rosparam file="$(find lvimesher)/config/fusionportablev2/$(arg platform).yaml" command="load" />
+
+    <group ns="lvimesher">
+        <!-- basic file parameters -->
+        <param name="bag_filename" value="$(arg bag_filename)" />
+        <param name="log_dir" value="$(arg log_dir)" />
+        <param name="log_odom_mesh_dir" value="$(arg log_dir)/odom_mesh/" />
+        <param name="log_slam_mesh_dir" value="$(arg log_dir)/slam_mesh/" />
+        <param name="log_slam_mesh_dir" value="$(arg log_dir)/slam_mesh/" />
+        <param name="log_pcd_dir" value="$(arg log_dir)/pcd/" />
+
+        <!-- camera models -->
+        <param name="left_camera_model_path" value="$(find lvimesher)/config/cameras/FPv2/left_$(arg platform).yaml" />
+        <param name="right_camera_model_path" value="$(find lvimesher)/config/cameras/FPv2/right_$(arg platform).yaml" />
+
+        <param name="voc_file_path" value="$(find lvimesher)/config/brief_k10L6.bin" />
+        <param name="mask_filename" value="$(find lvimesher)/config/fusionportablev2/mask.png" />
+        <param name="brief_pattern_file_path" value="$(find lvimesher)/config/brief_pattern.yml" />
+    </group>
+
+    <node name="lvimesher" pkg="lvimesher" type="slam_node" output="screen"/>
+    
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find lvimesher)/config/rviz/new.rviz" required="false" />
+    
+    <node required="false" pkg="rosbag" type="play" name="rosbag_player"
+          args="--clock $(arg bag_filename) -r 1"/>
+
+    <!-- image transform -->
+    <node pkg="image_transport" type="republish" name="republish_left" args="compressed in:=/stereo/frame_left/image_raw raw out:=/stereo/frame_left/image_raw" output="screen" respawn="true"/>
+    <node pkg="image_transport" type="republish" name="republish_right" args="compressed in:=/stereo/frame_right/image_raw raw out:=/stereo/frame_right/image_raw" output="screen" respawn="true"/>
+</launch>

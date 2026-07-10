@@ -1,0 +1,20 @@
+%YAML:1.0
+# TODO: 修改
+model_type:   PINHOLE
+camera_name:  left
+image_width:  2048
+image_height: 1536
+
+mask: ""
+distortion_model: radial-tangential
+distortion_parameters:
+   k1: -0.091833
+   k2:  0.082347
+   k3: 0
+   p1: 0.00038
+   p2: 0.00035
+projection_parameters:
+   fx: 1205.698
+   fy: 1205.539
+   cx: 1019.587
+   cy: 807.568

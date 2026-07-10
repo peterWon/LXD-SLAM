@@ -1,0 +1,18 @@
+%YAML:1.0
+model_type:   PINHOLE
+camera_name:  left
+image_width:  1242
+image_height: 375
+
+mask: ""
+distortion_model: radial-tangential
+distortion_parameters:
+   k1: 0
+   k2: 0
+   p1: 0
+   p2: 0
+projection_parameters:
+   fx: 721.537719727
+   fy: 721.537719727
+   cx: 609.559326172
+   cy: 172.854003906

@@ -1,0 +1,72 @@
+lvimesher:
+  enable_camera: true
+  enable_right_camera: false
+  enable_gnss: false
+
+  lidar1_topic: "/velodyne_points"
+  image_left_topic: "/image_left"
+  image_right_topic: "/image_right"
+  # gnss_topic: "/3dm_ins/gnss_left/fix"
+
+  enable_deskew: false
+  enable_vl_rotation_guess: false
+  enable_sliding_window_optimization: false
+  enable_opticflow_with_prediction: false  
+  marginalize_features: false
+  enable_vmap_constraint: false
+  lv_joint_eskf: false  
+  
+  # for offline use
+  enable_log_pcd: false
+  enable_scan_context: false
+  enable_extended_scan_context: false
+  enable_loop_orb3d: true
+  enable_log_mesh: false
+  enable_mesh_texture: false
+  
+  # lidar params
+  lidar1_type: "XYZI"
+  range_max: 100
+  range_min: 1.5
+  voxel_size_for_resgister: 0.2 #downsample for registration
+
+  # image params
+  skip_image_frames: 0
+  lidar1_time_offset: 0 # not need for kitti-odometry which has been deskewed already.
+  left_img_time_offset: 0
+  right_img_time_offset: 0
+  
+  # extrinsics
+  # do not use imu, just let LiDAR frame be IMU frame
+  T_Body_IMU: [1,  0,  0,  0,
+               0,  1,  0,  0,
+               0,  0,  1,  0,
+               0,  0,  0,  1] # IMU is the body frame
+  T_Body_Lidar1: [1.0,  0.0,  0.0, 0.000,
+           0.0,  1.0,  0.0,  0.000,
+           0.0,  0.0,  1.0,  0.000,
+           0.0,  0.0,  0.0,  1.000]
+  
+  
+  # kalman filter related parameters
+  lidar_measurement_std: 0.03
+  normal_uv_measurement_std: 0.01
+  residual_threshold: 0.3
+  visual_residual_threshold: 10
+  variance_register: 0.60
+
+  # mesh/submap params
+  frames_for_submap: 300
+  num_margin_old_cell: 500
+  variance_map_update: 0.50
+  variance_map_show: 0.20
+  variance_min: 1.36
+  variance_sensor: 0.03
+
+  # gaussian process params
+  grid: 1.5
+  num_test: 5
+  voxel_size: 0.2 # downsampling rate for mesh fitting
+  min_points_num_to_gp: 5
+
+

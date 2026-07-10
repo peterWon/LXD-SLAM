@@ -1,0 +1,38 @@
+<launch>
+    <arg name="dataset_folder" default="/media/wz/2C96A0A60155E8F8/Dataset/KITTI-Odometry/"/>
+    <arg name="sequence" default="05"/>
+    <arg name="log_dir" default="/media/wz/2C96A0A60155E8F8/Dataset/KITTI-Odometry/LOG/LXD-SLAM-l/05/"/>
+    <arg name="config" default="04_to_10"/>
+    
+    <rosparam file="$(find lvimesher)/config/kitti/kitti_base.yaml" command="load" />
+    <rosparam file="$(find lvimesher)/config/kitti/$(arg config).yaml" command="load" />
+    
+    <group ns="lvimesher">
+        <!-- basic file parameters -->
+        <param name="log_dir" value="$(arg log_dir)" />
+        <param name="log_odom_mesh_dir" value="$(arg log_dir)/odom_mesh/" />
+        <param name="log_slam_mesh_dir" value="$(arg log_dir)/slam_mesh/" />
+        <param name="log_slam_mesh_dir" value="$(arg log_dir)/slam_mesh/" />
+        <param name="log_pcd_dir" value="$(arg log_dir)/pcd/" />
+        
+        <!-- camera models -->
+        <param name="left_camera_model_path" value="$(find lvimesher)/config/cameras/kitti/$(arg sequence)_left.yaml" />
+        <param name="right_camera_model_path" value="$(find lvimesher)/config/cameras/kitti/$(arg sequence)_right.yaml" />
+        
+        <param name="seq" type="string" value="$(arg sequence)" />
+        <param name="voc_file_path" value="$(find lvimesher)/config/brief_k10L6.bin" />
+        <param name="brief_pattern_file_path" value="$(find lvimesher)/config/brief_pattern.yml" />
+    </group>
+
+    <node name="lvimesher" pkg="lvimesher" type="slam_node" output="screen"/>
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find lvimesher)/config/rviz/new.rviz" required="false" />
+
+    <node name="kitti_helper" pkg="lvimesher" type="kitti_helper" output="screen"> 
+        <param name="dataset_folder" type="string" value="$(arg dataset_folder)" />
+        <param name="sequence_number" type="string" value="$(arg sequence)" />
+        <param name="to_bag" type="bool" value="false" />
+        <param name="output_bag_file" type="string" value="./kitti.bag" />
+        <param name="publish_delay" type="int" value="1" />
+    </node>
+</launch>

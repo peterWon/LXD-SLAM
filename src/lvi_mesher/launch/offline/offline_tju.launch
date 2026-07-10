@@ -1,0 +1,27 @@
+<launch>
+    <arg name="bag_filename" default="/media/wz/2C96A0A60155E8F8/Dataset/TJU/2026-05-11-15-09-05.bag"/>
+    <arg name="log_dir" default="/media/wz/2C96A0A60155E8F8/Dataset/TJU/LOG/LXD-SLAM-lci/2026-05-11-15-09-05/"/>
+    
+    <rosparam file="$(find lvimesher)/config/tju.yaml" command="load" />
+
+    <group ns="lvimesher">
+        <!-- basic file parameters -->
+        <param name="bag_filename" value="$(arg bag_filename)" />
+
+        <!-- log options -->
+        <param name="enable_sc_icp" value="false" />
+        <param name="log_dir" value="$(arg log_dir)" />
+        <param name="log_odom_mesh_dir" value="$(arg log_dir)/odom_mesh/" />
+        <param name="log_slam_mesh_dir" value="$(arg log_dir)/slam_mesh/" />
+        <param name="log_pcd_dir" value="$(arg log_dir)/pcd/" />
+
+        <!-- camera models -->
+        <param name="left_camera_model_path" value="$(find lvimesher)/config/cameras/tju.yaml" />
+
+        <param name="voc_file_path" value="$(find lvimesher)/config/brief_k10L6.bin" />
+        <param name="brief_pattern_file_path" value="$(find lvimesher)/config/brief_pattern.yml" />
+    </group>
+
+    <node pkg="lvimesher" type="offline_node" name="offline_node" output="screen" required="true"/>    
+</launch>
+

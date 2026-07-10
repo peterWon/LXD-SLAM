@@ -1,0 +1,17 @@
+%YAML:1.0
+mask: ""
+model_type:   PINHOLE
+camera_name:  stereo_left_Flir_BFSU3
+image_width:  1024
+image_height: 768
+distortion_model: radial-tangential
+distortion_parameters:
+   k1: -0.0891
+   k2: 0.0885
+   p1: 0.0005
+   p2: 0.0020
+projection_parameters:
+   fx: 602.4532
+   fy: 602.4183
+   cx: 520.8442
+   cy: 397.5420

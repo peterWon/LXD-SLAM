@@ -1,0 +1,96 @@
+lvimesher:
+  # configure sensor combination  
+  enable_imu: false
+  enable_camera: false
+  enable_lidar2: false
+  enable_right_camera: false
+
+  enable_deskew: false # if enable_imu, you can set it true, otherwise false
+  enable_vl_rotation_guess: false
+
+  # topics coninside with sensor combination
+  imu_topic: "/imu/imu"
+  lidar1_topic: "/os1_cloud_node1/points"
+  lidar2_topic: "/os1_cloud_node2/points"
+  image_left_topic: "/left/image_raw"
+  image_right_topic: "/right/image_raw"
+  
+  # extrinsics
+  T_Body_IMU: [1,  0,  0,  0,
+               0,  1,  0,  0,
+               0,  0,  1,  0,
+               0,  0,  0,  1] # IMU is the body frame
+  T_Body_CamLeft: [0.02183084, -0.01312053,  0.99967558,  0.00552943,
+           0.99975965,  0.00230088, -0.02180248, -0.12431302,
+          -0.00201407,  0.99991127,  0.01316761,  0.01614686, 
+           0.00000000,  0.00000000,  0.00000000,  1.00000000]
+  T_Body_CamRight: [-0.01916508, -0.01496218,  0.99970437,  0.00519443,
+           0.99974371,  0.01176483,  0.01934191,  0.1347802,
+          -0.01205075,  0.99981884,  0.01473287,  0.01465067,
+           0.00000000,  0.00000000,  0.00000000,  1.00000000]
+  T_Body_Lidar1: [1.0,  0.0,  0.0, -0.050,
+           0.0,  1.0,  0.0,  0.000,
+           0.0,  0.0,  1.0,  0.055,
+           0.0,  0.0,  0.0,  1.000]
+  T_Body_Lidar2: [-1.0,  0.0,  0.0, -0.550,
+           0.0,  0.0,  1.0,  0.030,
+           0.0,  1.0,  0.0,  0.050,
+           0.0,  0.0,  0.0,  1.000]
+
+  # lidar params
+  lidar1_type: "ouster"
+  lidar2_type: "ouster"
+  
+  # image params
+  skip_image_frames: 0
+  left_img_time_offset: 0.0
+  right_img_time_offset: 0.0
+
+  # IMU-related parameters
+  gravity: 9.80511
+  accelerometer_std: 0.0365432018302
+  accelerometer_random_walk: 0.000433
+  gyroscope_std: 0.00367396706572
+  gyroscope_random_walk: 2.66e-05
+  
+  # frontend parameters
+  range_max: 50
+  range_min: 1.5
+  voxel_size_for_resgister: 0.2 #downsample for odometry
+  enable_sliding_window_optimization: false
+  enable_opticflow_with_prediction: false 
+  enable_vmap_constraint: false 
+  marginalize_features: false
+  lv_joint_eskf: false
+
+  use_mature_points_in_eskf: false
+  
+  # for offline use
+  enable_log_pcd: false
+  enable_sc_icp: false
+  enable_loop_submap: false
+  enable_log_mesh: false
+
+  # kalman filter related parameters
+  lidar_measurement_std: 0.025
+  normal_uv_measurement_std: 0.01
+  residual_threshold: 0.3
+  visual_residual_threshold: 15
+  variance_register: 0.60
+
+  # mesh/submap params
+  frames_for_submap: 20000000
+  num_margin_old_cell: 500
+  variance_map_update: 0.50
+  variance_map_show: 0.20
+  variance_depth_association: 0.1
+  variance_min: 1.36
+  variance_sensor: 0.03
+
+  # gaussian process params
+  grid: 1.5
+  num_test: 5
+  voxel_size: 0.2 # downsampling rate for mesh fitting
+  min_points_num_to_gp: 3
+
+

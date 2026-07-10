@@ -1,0 +1,48 @@
+cmake_minimum_required(VERSION 3.1)
+project(hdf5_map_io)
+
+set(CMAKE_CXX_STANDARD 14)
+
+find_package(catkin REQUIRED)
+find_package(LVR2 REQUIRED)
+find_package(MPI)
+find_package(PkgConfig REQUIRED)
+
+catkin_package(
+  INCLUDE_DIRS include
+  LIBRARIES hdf5_map_io
+  DEPENDS LVR2 MPI
+)
+
+# HighFive
+set(HIGHFIVE_EXAMPLES FALSE)
+set(HIGHFIVE_UNIT_TESTS FALSE)
+
+include_directories(
+  include
+  ${LVR2_INCLUDE_DIRS}
+)
+
+add_library(${PROJECT_NAME}
+  src/hdf5_map_io.cpp
+)
+
+find_library(LVR2_LIBRARY NAMES lvr2)
+
+target_link_libraries(${PROJECT_NAME}
+  ${LVR2_LIBRARY}
+  ${MPI_CXX_LIBRARIES}
+)
+
+install(TARGETS ${PROJECT_NAME}
+  ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY include/${PROJECT_NAME}/
+  DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+  FILES_MATCHING PATTERN "*.h"
+  PATTERN ".svn" EXCLUDE
+)
+

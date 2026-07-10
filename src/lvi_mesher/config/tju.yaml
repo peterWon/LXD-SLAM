@@ -1,0 +1,84 @@
+lvimesher:
+  # configure sensor combination  
+  enable_imu: true
+  enable_camera: true
+  enable_deskew: true # if enable_imu, you can set it true, otherwise false
+
+  # topics coninside with sensor combination
+  imu_topic: "/livox/imu"
+  lidar1_topic: "/livox/lidar"
+  image_left_topic: "/left_camera/image"
+  
+  # extrinsics
+  T_Body_IMU: [1,  0,  0,  0,
+               0,  1,  0,  0,
+               0,  0,  1,  0,
+               0,  0,  0,  1] # IMU is the body frame
+  T_Body_CamLeft: [0.00516621, -0.00114374, 0.999986, 0.0317316,
+            -0.999958, 0.00753245, 0.00517468, 0.0227137,
+            -0.00753827, -0.999971, -0.00110478, 0.0356242,
+             0.,  0.,  0.,  1.]
+  T_Body_Lidar1: [1.,  0.,  0., 0.04165, 
+               0.,  1.,  0.,  0.02326, 
+               0.,  0.,  1.,  -0.0284, 
+               0.,  0.,  0.,  1.]
+
+  # lidar params
+  lidar1_type: "livox"
+  
+  # image params
+  skip_image_frames: 0
+  left_img_time_offset: 0.1
+
+  # IMU-related parameters
+  gravity: 9.79
+  accelerometer_std: 0.1
+  accelerometer_random_walk: 0.0001
+  gyroscope_std: 0.1
+  gyroscope_random_walk: 0.0001
+  
+  # frontend parameters
+  range_max: 60
+  range_min: 1.0
+  voxel_size_for_resgister: 0.1 #downsample for odometry
+  enable_opticflow_with_prediction: false 
+  enable_vmap_constraint: false 
+  marginalize_features: false
+  lv_joint_eskf: true
+
+  use_mature_points_in_eskf: false
+  
+  # for offline use
+  enable_log_pcd: false
+  enable_scan_context: false
+  enable_extended_scan_context: false
+  enable_loop_orb3d: false
+  enable_log_mesh: false
+  enable_mesh_texture: false
+
+  extended_scan_context_threshold: 0.05
+  loop_orb3d_threshold: 0.02
+
+  # kalman filter related parameters
+  lidar_measurement_std: 0.03
+  normal_uv_measurement_std: 0.01
+  residual_threshold: 0.3
+  visual_residual_threshold: 10
+  variance_register: 0.60
+
+  # mesh/submap params
+  frames_for_submap: 300
+  num_margin_old_cell: 500
+  variance_map_update: 0.50
+  variance_map_show: 0.20
+  variance_depth_association: 0.1
+  variance_min: 1.36
+  variance_sensor: 0.03
+
+  # gaussian process params
+  grid: 1.0
+  num_test: 5
+  voxel_size: 0.1 # downsampling rate for mesh fitting
+  min_points_num_to_gp: 5
+
+
